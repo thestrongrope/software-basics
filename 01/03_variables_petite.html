@@ -1,0 +1,13 @@
+<script crossorigin="anonymous" src="https://unpkg.com/petite-vue" defer init></script>
+<div v-scope="{ person: 'World' }">
+    <h1>Hello {{ person }}</h1>
+    <input 
+        placeholder="Name of the person"
+        type="text" 
+        v-model="person" />
+</div>
+<style>
+    body { font-family: Verdana; text-align: center; padding-top: 30px; }
+    h1 { color: maroon; }
+    input { font-family: Verdana; font-size: 18pt; border: solid 1px #ccc; text-align: center;}
+</style>
