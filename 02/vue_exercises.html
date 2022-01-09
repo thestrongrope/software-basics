@@ -1,0 +1,70 @@
+<script src="https://unpkg.com/petite-vue" defer init></script>
+
+<section v-scope="{ firstName: '', lastName: '' }">
+    <h3>String Comparison</h3>
+    <input type="text" v-model="firstName" placeholder="first name" />
+    <input type="text" v-model="lastName" placeholder="last name" />
+
+    <div v-if="firstName || lastName">
+        <h1 v-if="firstName === lastName">Both first and last names are {{ firstName }}</h1>
+        <h1 v-else>{{ firstName }} and {{ lastName }} are not the same</h1>    
+    </div>
+</section>
+
+<section v-scope="{ num1: '', num2: null }">
+    <h3>String and Number comparison</h3>
+    <input type="text" v-model="num1" placeholder="number as text" />
+    <input type="number" v-model="num2" placeholder="number" />
+    <div v-if="num1 || num2">
+        <h1 v-if="num1 === num2">This will never show</h1>
+        <h1 v-else>"{{ num1 }}" and {{ num2 }} are not the same</h1>    
+    </div>
+</section>
+
+<section v-scope="{ colors: { red: false, green: false, blue: false } }">
+    <h3>Boolean - Colors</h3>
+    <ul>
+        <li><label><input type="checkbox" v-model="colors.red">Red</label></li>
+        <li><label><input type="checkbox" v-model="colors.green">Green</label></li>
+        <li><label><input type="checkbox" v-model="colors.blue">Blue</label></li>
+    </ul>
+    {{ colors }}
+</section>
+
+<section v-scope="{ age: null }">
+    <h3>Age calculation</h3>
+    <input type="range" v-model="age" min="14" max="50" /> {{ age }}
+    <div v-if="age">
+        You were born in the year {{ 2021 - age }}
+    </div>
+</section>
+
+<section v-scope="{ costPrice: null, gstRate: 18 }">
+    <h3>GST calculation</h3>
+    Cost Price: <input type="number" v-model="costPrice" />
+    <br />
+    GST Rate:
+    <input type="number" v-model="gstRate" />%
+    <div v-if="costPrice">
+        The GST of the item which costs Rs. {{ costPrice }} 
+        is Rs. {{ (costPrice * (gstRate / 100) ).toFixed(2) }}
+        at a GST of {{ gstRate }}%
+    </div>
+</section>
+
+<style>
+    section {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 2vw;
+            margin: auto; width: 800px; 
+            margin-top: 10px; 
+            box-shadow: #ccc 1px 1px 1px;
+            border: solid 1px #ccc; 
+            text-align: center; padding: 10px; }
+    section h3 { margin: 0; padding: 0; }
+    section input { text-align: center; font-size: 1.8vw; }
+    section input[type=text] { background: #ffe; }
+    section input[type=number] { background: #eef; }
+    label { background: #fee; border: solid 1px #000; margin: 2px; display: block; }
+    li { list-style: none;}
+</style>
