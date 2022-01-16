@@ -1,0 +1,33 @@
+<script>
+// Compare the two strings “power” and “Power” 
+// are they the same?
+var name1 = 'Ali';
+var name2 = 'ali';
+var isSame;
+
+// will fail - since string comparison is case sensitive
+// i.e. Ali, ali an ALI are three different names
+isSame = name1 === name2;
+console.log(`The two names are same: ${isSame}`);
+
+// convert both to upper case so that they can
+// be compared
+isSame = name1.toUpperCase() === name2.toUpperCase();
+console.log(`The two names are same: ${isSame}`);
+
+console.log(`The final names are ${name1} and ${name2}`)
+
+// Compare the two numbers “20” and “020” are they the same?
+// these two are not the same because in JavaScript
+// any number starting with 0 is considered to be
+// of the octal number system i.e. base of 8
+console.log(20 == 020);
+
+// convert 020 to a decimal number for it to be comparable
+console.log(20 == parseInt('020', 10));
+
+// Compare the two string “20” and “020"
+// these two are not the same
+console.log('20' == '020');
+
+</script>

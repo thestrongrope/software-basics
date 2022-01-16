@@ -1,0 +1,30 @@
+<script>
+// Exercises to solve during the week
+// Accept a number from a user and print its double
+var num = prompt('Please enter a number');
+// issue is that prompt always returns a string
+
+// Hence we need to convert it to a number
+// to do mathematical operations on it
+num = parseInt(num, 10); // without fractions / whole
+num = parseFloat(num, 10); // allow fractions
+// the ,10 specifies that the number should belong
+// to the decimal number system ie. base of 10
+// various number systems are
+// binary - base of 2 - 0 and 1
+// octal - base of 8 - 0 to 7
+// decimal - base of 10 - 0 to 9
+// hexadecimal - base of 16 - 0 to 9 and a to f
+
+num = Number(num); // allow fractions
+
+// + will act as concatenation operation if
+// either of the two entries is a string
+var doubledNumber;
+doubledNumber = num * 2;
+doubledNumber = num + num;
+
+// String Literal start and end with back ticks
+console.log(`The double of ${num} is ${doubledNumber}`);
+document.write(`The double of ${num} is ${doubledNumber}`);
+</script>    

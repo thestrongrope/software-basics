@@ -1,0 +1,11 @@
+<script>
+// Accept age from the user and 
+// print the year the person was born in
+var num = prompt('Please enter your age');
+var birthYear;
+birthYear = 2021 - num;
+console.log(`Your were born in ${birthYear}`);
+// fetch current year from system
+birthYear = (new Date()).getFullYear() - num;
+console.log(`Your were born in ${birthYear}`);
+</script>

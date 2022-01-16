@@ -1,0 +1,11 @@
+<script>
+// Accept cost price and GST rate from the user and 
+// print the final GST
+var cost = prompt('Please enter cost price');
+var gstRate = prompt('Please enter GST rate (%)');
+gstRate = parseFloat(gstRate, 10); // base of 10
+var gst = cost * (gstRate / 100);
+var finalPrice = cost + gst;
+console.log(`GST of the item is ${gst}`)
+console.log(`Final price is ${finalPrice}`)
+</script>

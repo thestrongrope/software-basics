@@ -1,0 +1,12 @@
+<script>
+// Accept a number from a user and
+// print false if it is an odd number
+var num = prompt('Please enter a number');
+var isEven; 
+isEven = (num % 2) === 0; // true or false
+var isOdd;
+isOdd = !isEven; // Exclamation sign (!) = NOT
+isOdd = (num % 2) !== 0;
+isOdd = (num % 2) === 1;
+console.log(`The number ${num} is odd: ${isOdd}`)
+</script>
