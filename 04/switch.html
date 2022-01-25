@@ -1,0 +1,15 @@
+<h1><pre><script> //'2022-01-21'
+    const userDay = prompt('Please enter a day *yyyy-mm-dd* format');
+    const day = (new Date(userDay)).getDay();
+    var dayName; // CTRL + ALT + DOWN ARROW ; CTRL + C / CTRL + V
+    switch(day) {
+        case 0: dayName = 'Sunday'; break;
+        case 1: dayName = 'Monday'; break;
+        case 2: dayName = 'Tuesday'; break;
+        case 3: dayName = 'Wednesday'; break;
+        case 4: dayName = 'Thursday'; break;
+        case 5: dayName = 'Friday'; break;
+        default: dayName = 'Saturday';
+    } // switch statement can be changed to an array selection
+    document.write(`Entered day is ${dayName}`)
+</script></pre></h1>

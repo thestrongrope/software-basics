@@ -1,0 +1,13 @@
+<pre><script>
+    const numberOfStudents = parseInt(prompt('How many students'), 10);
+    const halfOfTheStudents = numberOfStudents / 2; 
+    document.write(`Number of Students: ${numberOfStudents}\n`);
+    document.write(`Half of the Students: ${halfOfTheStudents}\n`);
+    if (numberOfStudents === 0) {
+        document.write("We have no students \n");
+    } else if (numberOfStudents % 2 === 0) { // even
+        document.write("We have an even number of students \n");
+    } else { // odd
+        document.write("We have an odd number of students \n");
+    }
+</script></pre>
