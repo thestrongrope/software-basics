@@ -1,0 +1,17 @@
+<script>
+    // scoping
+    // local scoping & global scoping
+    // local => let
+    // global => var or const
+    
+    for(let num = 1; num <= 10; num++) {
+        let isOdd = num % 2 === 1;
+        if ( isOdd ) {
+            document.write(`<h1>For Loop with condition: ${num}</h1>`);
+        }
+    }
+
+    for(let num = 1; num <= 10; num+=2) {
+        document.write(`<h1>For Loop with increment: ${num}</h1>`);
+    }
+</script>

@@ -1,0 +1,29 @@
+<script>
+    const marks = 20 //prompt("Please enter student marks");
+    if (marks < 0 || marks > 100) {
+        document.write("<h1>Invalid marks</h1>");
+    } else if (marks < 35) {
+        document.write("<h1>Fail</h1>");
+    } else if (marks >= 35 && marks < 60) {
+        document.write("<h1>Pass</h1>");
+    } else if (marks >= 60 && marks < 75) {
+        document.write("<h1>Merit</h1>");
+    } else {
+        document.write("<h1>Distinction</h1>");
+    }
+
+    const message = (marks < 0 || marks > 100 ? "Invalid marks" 
+                        : marks < 35 ? "Fail"
+                        : marks >= 35 && marks < 60 ? "Pass"
+                        : marks >= 60 && marks < 64 ? "Merit"
+                        : "Distinction");
+
+    var message;
+    if ( marks >= 35) {
+        message = "Pass";
+    } else {
+        message = "Fail";
+    }
+
+    document.write(message);
+</script>

@@ -1,0 +1,13 @@
+<pre id="message"></pre>
+<script>
+    const howManyStars = 7;
+    for(let i = 1; i<=howManyStars; i++) {        
+        for(let j = howManyStars - i; j >= 0; j--) {
+            message.innerHTML += ' ';
+        }
+        for(let j = 0; j < i*2-1; j++ ) {
+            message.innerHTML += '*';
+        }
+        message.innerHTML += ' ' + (i+1) + ":" + (10 - i - 1) + '<br />';
+    }
+</script>

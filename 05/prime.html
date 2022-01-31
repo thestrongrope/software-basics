@@ -1,0 +1,20 @@
+<h2>Enter a number?<input type="number" id="numInput" /></h2>
+<button onclick="isPrime()">Check if number is prime</button>
+<h2>Message</h2>
+<div id="message"></div>
+<script>
+    const numInput = document.getElementById("numInput");
+    const message = document.getElementById("message");
+    function isPrime() {
+        const num = parseInt(numInput.value, 10);
+        let primeNumber = true;
+        for(let i = 2; i < num; i++) {
+            const isDivisible = num % i == 0;
+            message.innerHTML += `Checking if ${num} is divisible by ${i} - ${isDivisible}<br />`    
+            if (isDivisible) {
+                primeNumber = false;
+            }
+        }
+        message.innerHTML += primeNumber ? "Prime number" : "Not a prime number";
+    }
+</script>

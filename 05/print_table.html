@@ -1,0 +1,19 @@
+<h2>Which number?<input type="number" id="num" /></h2>
+<h2>How many times?<input type="number" id="times" /></h2>
+<input type="button" onclick="createTable()" value="Create Table" />
+<h2>Results</h2>
+<div id="output"></div>
+<script>
+    const numInput = document.getElementById("num");
+    const timesInput = document.getElementById("times");
+    const output = document.getElementById("output");
+    function createTable() {
+        const num = parseInt(numInput.value, 10);
+        const times = timesInput.value;
+        let answer = num;
+        for(let i = 1; i <= times; i++) {
+            output.innerHTML += `<h1>${num} x ${i} = ${answer}</h1>`;
+            answer += num
+        }
+    }
+</script>
