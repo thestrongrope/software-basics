@@ -1,0 +1,8 @@
+<ol id="messages"></ol>
+<script>
+    let messages = [];
+    messages.push('Name is required')
+    messages.push('Age is required')
+    var msgObject = document.getElementById("messages");
+    msgObject.innerHTML = '<li>' + messages.join('</li><li>') + '</li>'
+</script>

@@ -1,0 +1,36 @@
+<script>
+    //let colors = new Array('red', 'green', 'blue');
+    let colors = ['red', 'green', 'blue'];
+    
+    // Stack functions
+    colors.push('pink');
+    colors.push('purple');
+    const lastColor = colors.pop();
+
+    // Queue functions
+    const firstColor = colors.shift()
+    colors.unshift('skyblue');
+    
+    for(let i = 0; i < colors.length; i++) {
+        document.write('<div style="color:'+colors[i]+'">' + colors[i] + '</div>');
+    }
+
+    document.write('<h1>' + lastColor + '</h1>');
+    document.write('<h1>' + firstColor + '</h1>');
+
+    const color = 'lightblue';    
+    if( colors.indexOf(color) === -1 ) {
+        document.write('<h1>' + color + ' is not there in the list of colors</h1>');
+    } else {
+        document.write('<h1>' + color + ' is there in the list of colors</h1>');
+    }
+
+
+    // Final Array
+    colors = colors.sort();
+    for(let i = 0; i < colors.length; i++) {
+        document.write('<div style="color:'+colors[i]+'">' + colors[i] + '</div>');
+    }
+    // FIFO => First In - First Out (Queue)
+    // LIFO => Last In - First Out (Stack)
+</script>

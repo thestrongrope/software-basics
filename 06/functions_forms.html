@@ -1,0 +1,17 @@
+
+<h1 style="color:red" id="message"></h1>
+
+<form>
+    <input name="name" type="text" 
+        placeholder="Please enter your name" />
+    <button type="button" onclick="convertToUppercase(this.form)">
+        Convert to Uppercase
+    </button> 
+</form>
+
+<script>
+    const messageObject = document.getElementById("message");
+    function convertToUppercase(frm) {
+        messageObject.innerHTML = frm.name.value.toUpperCase();;
+    }
+</script>

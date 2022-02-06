@@ -1,0 +1,62 @@
+<ol style="color:red" id="message"></ol>
+
+<form>
+    <input name="name" type="text" 
+        placeholder="Please enter your name" />
+    <br />
+    <input name="age" type="text" 
+        placeholder="Please enter your age" />
+    <br />
+    <input name="gender" type="text" 
+        placeholder="Please enter your gender" />
+    <br />
+    <input name="location" type="text" 
+        placeholder="Please enter your location" />
+    <br />
+    <button
+        type="button"
+        onclick="validateForm(this.form)"
+        >Register</button> 
+</form>
+
+<script>
+    const messageObject = document.getElementById("message");
+    let focusSet = false;
+
+    function validateForm(frm) {
+        let message = "";
+        // checking that name should not be blank
+        {
+            let nameMessage = isBlank(frm.name, 'Name');
+            if ( !nameMessage && frm.name.value.length < 2 ) {
+                nameMessage += "<li>Please enter a name more than 1 character</li>"
+                if(!focusSet) { frm.name.select(); focusSet = true; }
+            }
+            message += nameMessage;
+        }
+
+        message += isBlank(frm.age, 'Age');
+        if ( isNaN(parseInt(frm.age.value, 10)) ) {
+            message += "<li>Please enter a numeric age</li>"
+            if(!focusSet) { frm.age.focus(); focusSet = true; }
+        } else 
+            // checking that age should be between 10 and 100
+            if ( 
+            parseInt(frm.age.value, 10) < 10 
+            || parseInt(frm.age.value, 10) > 100 ) {
+            message += "<li>Please enter an age between 10 and 100</li>"
+            if(!focusSet) { frm.age.focus(); focusSet = true; }
+        }
+
+        messageObject.innerHTML = message;
+
+        return false;
+    }
+
+    function isBlank(obj, label) {
+        if ( obj.value === "" ) {
+            return `<li>Please enter your ${label}</li>`
+        }
+    }
+
+</script>
