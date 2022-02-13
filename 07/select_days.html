@@ -1,0 +1,13 @@
+<select id="day"></select>
+<script>
+    let weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const dayObj = document.getElementById("day");
+
+    let html = "";
+
+    for(let i = 0; i < weekDays.length; i++) {
+        html += `<option value="${i + 1}">${weekDays[i]}</option>`; 
+    }
+
+    dayObj.innerHTML = html;
+</script>

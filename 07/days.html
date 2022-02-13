@@ -1,0 +1,40 @@
+
+<script>
+    // Arrays
+    let weekDay = "Monday";
+
+    document.write(weekDay);
+
+    weekDay = "Tuesday";
+
+    document.write(weekDay);
+    document.write("<hr />")
+
+    let weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    console.log(weekDays);
+
+    // Design Patterns
+    // DRY = Don't Repeat Yourself
+
+    document.write(weekDays[0] + "<br />");
+    document.write(weekDays[1] + "<br />");
+    document.write(weekDays[2] + "<br />");
+
+    for(let i = 0; i < weekDays.length; i++) {
+        document.write(weekDays[i] + "<br />");
+    }
+</script>
+
+<input type="number" id="dayOfWeek" />
+<button onclick="printWeekDay();">Print</button>
+<h1 style="color:red" id="message"></h1>
+
+<script>
+    const messageObj = document.getElementById("message");
+    const dayOfWeekObj = document.getElementById("dayOfWeek"); 
+    function printWeekDay() {
+        // accept day of the week from user
+        const day = dayOfWeekObj.value;
+        messageObj.innerHTML = "Selected Day: " + weekDays[day - 1];
+    }
+</script>

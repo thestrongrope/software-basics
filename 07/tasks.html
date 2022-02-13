@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Simple List</title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Simple list</h1>
+        <form name="newItemForm" onsubmit="return addItem(this)">
+            <input autofocus required id="newItem" name="newItem" type="text" class="form-control">
+            <button class="btn btn-primary">Add Item</button>
+        </form>
+        <ul id="items" class="list-group mt-2"></ul>        
+    </div>
+    <script>
+        // UI objects
+        const itemsObj = document.getElementById("items");
+
+        // Data objects
+        let itemList = [];
+        
+        function addItem(formObj) {
+            const newItemLabel = formObj.newItem.value;
+            itemList.push(newItemLabel);
+            formObj.newItem.value = "";
+            formObj.newItem.focus();
+            displayItems();
+            return false;
+        }
+
+        function deleteItem(index) {
+            // itemList = itemList.filter( (x, i) => i !== index);
+
+            // let newArr = [];
+            // for(let i = 0; i < itemList.length; i++) {
+            //     if(i !== index) newArr.push(itemList[i]);
+            // }
+            // itemList = newArr;
+
+            // Splice = remove items from an array
+            itemList.splice(index, 1);
+
+            displayItems();
+        }
+
+        function displayItems() {
+            let html = "";
+            for(let i = 0; i < itemList.length; i++) {
+                html += `<li class='list-group-item'>${itemList[i]} 
+                    <button class="btn btn-danger" onclick='deleteItem(${i})'>Delete</button></li>`;
+            }
+            itemsObj.innerHTML = html;
+        }
+    </script>
+  </body>
+</html>

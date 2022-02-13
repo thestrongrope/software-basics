@@ -1,0 +1,20 @@
+<div id="message">
+</div>
+
+<script>
+// REST
+const url = 'https://api.freegeoip.app/json/?apikey=e872d0c0-8cb3-11ec-a794-a911c82b0e0e';
+fetch(url)
+    .then(x => x.json())
+    .then(x => {
+        let messageHtml = "IP: " + x.ip
+            + "<br />City: " + x.city
+            + "<br />Region: " + x.region_name
+            + "<br />Time Zone: " + x.time_zone
+            + "<br />Zip Code: " + x.zip_code
+            + "<br />Country: " + x.country_name
+            + "<br />Lat: " + x.latitude
+            + "<br />Lng: " + x.longitude;
+        document.getElementById("message").innerHTML = messageHtml;
+    });
+</script>
