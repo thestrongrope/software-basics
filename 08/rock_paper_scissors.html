@@ -1,0 +1,60 @@
+<button onclick="selectOption(0);">Rock</button>
+<button onclick="selectOption(1);">Paper</button>
+<button onclick="selectOption(2);">Scissors</button>
+
+<h1>Result</h1>
+<div id="result"></div>
+<script>
+    // Constants - normally upper case
+    const ROCK = 0;
+    const PAPER = 1;
+    const SCISSORS = 2;
+
+    const resultObject = document.getElementById("result");
+    const options = ['rock', 'paper', 'scissors'];
+    function selectOption(userSelection) {        
+        // select a random number between 0, 1, or 2
+        computerSelection = Math.floor(Math.random() * 3);
+        if ( computerSelection === 3 ) {
+            computerSelection = 2;
+        } 
+        
+        let result;
+
+        if ( userSelection === computerSelection ) {
+            result = 'Draw';
+        } else {
+            if (userSelection === ROCK)
+            {
+                if (computerSelection === PAPER) 
+                {
+                    result = 'User wins';
+                } else {
+                    result = 'Computer wins';
+                }
+            } else if (userSelection === PAPER) {
+                if (computerSelection === ROCK) 
+                {
+                    result = 'User wins';
+                } else {
+                    result = 'Computer wins';
+                }
+            } else if (userSelection === SCISSORS) {
+                if (computerSelection === PAPER) 
+                {
+                    result = 'User wins';
+                } else {
+                    result = 'Computer wins';
+                }
+            }
+        }
+
+        let message;        
+        message = "You selected " + options[userSelection];
+        message = message + "<br />";
+        message += "Computer selected " + options[computerSelection];
+        message = message + "<br />";
+        message += "Result: " + result;
+        resultObject.innerHTML = message
+    }
+</script>
