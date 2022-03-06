@@ -1,0 +1,63 @@
+<input id="newTask" type="text" placeholder="New Task">
+<button id="addButton" type="button">Add</button>
+<button id="removeAllButton" type="button">Remove all completed Tasks</button>
+<hr />
+<h3>Task list</h3>
+<ul id="taskList">
+</ul>
+<script>
+    // DOM Objects
+    const newTaskObj = document.getElementById("newTask"); 
+    const addButtonObj = document.getElementById("addButton"); 
+    const taskListObj = document.getElementById("taskList");
+    const removeAllButtonObj = document.getElementById("removeAllButton");
+
+    // Click Handler
+    addButtonObj.addEventListener("click", addNewTask);
+    removeAllButtonObj.addEventListener("click", removeCompletedTasks);
+
+    // Add New Function
+    function addNewTask() {
+        
+        if(newTaskObj.value.length === 0) return;
+
+        // Create New List Item
+        var newListItem = document.createElement("li");
+        newListItem.innerHTML = newTaskObj.value;
+
+        newListItem.addEventListener("click", markAsComplete);
+
+        taskListObj.appendChild(newListItem);
+
+        // Blanks out the New Task box
+        newTaskObj.value = "";
+
+        // Sets focus on to the new Task box
+        newTaskObj.focus();
+    }
+
+    function markAsComplete()
+    {
+        this.className = "complete";
+        this.removeEventListener("click", markAsComplete);
+        this.addEventListener("click", deleteTask);
+    }
+
+    function deleteTask()
+    {
+        this.className = "deleted";
+        this.removeEventListener("click", deleteTask);
+    }
+
+    function removeCompletedTasks() 
+    {
+        const completedTasks = document.getElementsByClassName("complete");
+        Array.from(completedTasks).map(x => {
+            x.className = "deleted";
+        })
+    }
+</script>
+<style>
+    li.complete { text-decoration: line-through; font-style: italic }
+    li.deleted { display: none; }
+</style>

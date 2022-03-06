@@ -1,60 +1,96 @@
-<button onclick="selectOption(0);">Rock</button>
-<button onclick="selectOption(1);">Paper</button>
-<button onclick="selectOption(2);">Scissors</button>
+<!doctype html>
+<html lang="en">
 
-<h1>Result</h1>
-<div id="result"></div>
-<script>
-    // Constants - normally upper case
-    const ROCK = 0;
-    const PAPER = 1;
-    const SCISSORS = 2;
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>JS Training</title>
+</head>
 
-    const resultObject = document.getElementById("result");
-    const options = ['rock', 'paper', 'scissors'];
-    function selectOption(userSelection) {        
-        // select a random number between 0, 1, or 2
-        computerSelection = Math.floor(Math.random() * 3);
-        if ( computerSelection === 3 ) {
-            computerSelection = 2;
-        } 
-        
-        let result;
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="card-title">Rock Paper Scissors</h1>
+                    </div>
+                    <div class="card-body">
+                        <div id="result"></div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" onclick="selectOption(ROCK);">Rock</button>
+                        <button class="btn btn-primary" onclick="selectOption(PAPER);">Paper</button>
+                        <button class="btn btn-primary" onclick="selectOption(SCISSORS);">Scissors</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <ul class="list-group" id="scores">
+                    <li class="list-group-item bg-primary text-light">Scores</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Constants - normally upper case
+        const ROCK = 0;
+        const PAPER = 1;
+        const SCISSORS = 2;
 
-        if ( userSelection === computerSelection ) {
-            result = 'Draw';
-        } else {
-            if (userSelection === ROCK)
-            {
-                if (computerSelection === PAPER) 
-                {
-                    result = 'User wins';
-                } else {
-                    result = 'Computer wins';
-                }
-            } else if (userSelection === PAPER) {
-                if (computerSelection === ROCK) 
-                {
-                    result = 'User wins';
-                } else {
-                    result = 'Computer wins';
-                }
-            } else if (userSelection === SCISSORS) {
-                if (computerSelection === PAPER) 
-                {
+        let gamesPlayed = 1;
+
+        const options = ['rock', 'paper', 'scissors']
+        const resultObject = document.getElementById("result");
+        const scoresObject = document.getElementById("scores");
+
+        function didUserWin(user, computer) {
+            return (user === PAPER && computer === ROCK)
+                || (user === ROCK && computer === SCISSORS)
+                || (user === SCISSORS && computer === PAPER)
+        }
+
+        function selectOption(userSelection) {
+
+            // User Selection
+            // Computer to select a number between 0 and 2
+            // Compare 
+            //  Winning Conditions [0, 2], [1, 0], [2, 1]
+
+            // select a random number between 0, 1, or 2
+            let computerSelection = Math.floor(Math.random() * 3, 0);
+            if (computerSelection === 3) computerSelection = 2;
+
+            let result;
+            if (userSelection === computerSelection) {
+                result = 'Draw';
+            } else {
+                if (didUserWin(userSelection, computerSelection)) {
                     result = 'User wins';
                 } else {
                     result = 'Computer wins';
                 }
             }
-        }
 
-        let message;        
-        message = "You selected " + options[userSelection];
-        message = message + "<br />";
-        message += "Computer selected " + options[computerSelection];
-        message = message + "<br />";
-        message += "Result: " + result;
-        resultObject.innerHTML = message
-    }
-</script>
+            var newScore = document.createElement("LI");
+            newScore.className = "list-group-item";
+            newScore.innerHTML = `#${gamesPlayed}: ${result}`;
+            scoresObject.appendChild(newScore);
+
+            gamesPlayed++;
+
+            let message;
+            message = "You selected " + options[userSelection];
+            message = message + "<br />";
+            message += "Computer selected " + options[computerSelection];
+            message = message + "<br />";
+            message += "Result: " + result;
+            resultObject.innerHTML = message
+        }
+    </script>
+
+</body>
+
+</html>
