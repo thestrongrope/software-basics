@@ -1,3 +1,4 @@
+Current Player: <span id="currentPlayer"></span>
 <table border=1>
     <tr>
         <td></td>
@@ -36,30 +37,44 @@
         Array.from(cells).map(x => x.innerHTML = '');
     }
 
+    const isDraw = () => {
+        const total = Array.from(cells).reduce(
+            (count, cell) => count + (cell.innerHTML === '' ? 0: 1)
+            , 0);
+        return total === cells.length;
+    }
+
     const checkWinner = () => {
+
         for(let i = 0; i < winningConditions.length; i++) {
             let [a, b, c] = winningConditions[i];
             let winner = cells[a].innerHTML;
             if ( winner === "" ) continue;
             if ( cells[a].innerHTML === cells[b].innerHTML
                 && cells[b].innerHTML === cells[c].innerHTML) {
-                    return winner;
+                    return winner + " Won";
             }
         }
+
+        if ( isDraw() ) {
+            return "Game has drawn";
+        }
+
         return false;
     }
 
     const clickHandler = function(e) {
         if(this.innerHTML === "") {
             this.innerHTML = currentPlayer;
-            currentPlayer = currentPlayer === "X" ? "0" : "X";
-            const winner = checkWinner(); 
-            if(winner !== false) {
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+            const winningMessage = checkWinner(); 
+            if(winningMessage !== false) {
                 setTimeout(() => {
-                    alert(winner + " Won");
+                    alert(winningMessage);
                     resetGame();
                 }, 100);
             }
+            document.getElementById("currentPlayer").innerHTML = currentPlayer;
         }
     }
 
@@ -67,6 +82,8 @@
         cells[i].dataset.id = i;
         cells[i].addEventListener("click", clickHandler);
     }
+
+    document.getElementById("currentPlayer").innerHTML = currentPlayer;
 </script>
 
 <style>
