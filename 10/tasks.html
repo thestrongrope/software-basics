@@ -1,0 +1,65 @@
+<div id="app">
+    <input v-model="newTaskLabel" type="text">
+    <div>You are typing: {{newTaskLabel}}</div>
+    <button @click="addTask">Add Task</button>
+    <table>
+        <tr>
+            <td valign="top">
+                Pending Tasks
+                <ul>
+                    <li v-for="task in getPendingTasks()">
+                        {{ task.label }}
+                        <button @click="markAsComplete(task)">Done</button>
+                    </li>
+                </ul>
+            </td>
+            <td valign="top">
+                Completed Tasks
+                <ul>
+                    <li v-for="task in getCompletedTasks()">{{ task.label }}
+                        <button @click="deleteTask(task)">Delete</button>
+                    </li>
+                </ul>
+            
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="https://unpkg.com/vue@3"></script>
+<script>
+  Vue.createApp({
+    data() {
+      return {
+        lastTaskId: 0,
+        newTaskLabel: "",
+        taskList: []
+      }
+    },
+    methods: {
+        addTask() {
+            this.taskList.push({
+                id: this.lastTaskId,
+                label: this.newTaskLabel,
+                isComplete: false
+            });
+            this.lastTaskId ++;
+            this.newTaskLabel = "";
+        },
+        markAsComplete(task) {
+            task.isComplete = true;
+        },
+        deleteTask(task) {
+            this.taskList = this.taskList.filter(x => x.id !== task.id);
+        },
+        getCompletedTasks() {
+            return this.taskList.filter(x => x.isComplete);
+        },
+        getPendingTasks() {
+            return this.taskList.filter(x => !x.isComplete);
+        }
+    }
+  }).mount('#app')
+</script>
+<style>
+    #app { color: red; }
+</style>
