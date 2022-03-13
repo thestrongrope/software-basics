@@ -1,0 +1,74 @@
+<table border=1>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<script>    
+    let currentPlayer = "X";
+
+    const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ]
+
+    
+    const cells = document.getElementsByTagName("td");
+
+    const resetGame = () => {
+        Array.from(cells).map(x => x.innerHTML = '');
+    }
+
+    const checkWinner = () => {
+        for(let i = 0; i < winningConditions.length; i++) {
+            let [a, b, c] = winningConditions[i];
+            let winner = cells[a].innerHTML;
+            if ( winner === "" ) continue;
+            if ( cells[a].innerHTML === cells[b].innerHTML
+                && cells[b].innerHTML === cells[c].innerHTML) {
+                    return winner;
+            }
+        }
+        return false;
+    }
+
+    const clickHandler = function(e) {
+        if(this.innerHTML === "") {
+            this.innerHTML = currentPlayer;
+            currentPlayer = currentPlayer === "X" ? "0" : "X";
+            const winner = checkWinner(); 
+            if(winner !== false) {
+                setTimeout(() => {
+                    alert(winner + " Won");
+                    resetGame();
+                }, 100);
+            }
+        }
+    }
+
+    for(let i = 0; i < cells.length; i++) {
+        cells[i].dataset.id = i;
+        cells[i].addEventListener("click", clickHandler);
+    }
+</script>
+
+<style>
+    td {width:30px;height:30px; text-align: center; font-family: Arial;}
+</style>
