@@ -1,0 +1,31 @@
+<body>
+<div id="ball"></div>
+<script>
+    const ballObj = document.getElementById("ball");
+    let x, y;
+    let xspeed, yspeed;
+    x = 0;
+    y = 0;
+    xspeed = 1;
+    yspeed = 1;
+    function draw() {
+        x = x + xspeed;
+        y = y + yspeed;
+        ballObj.style.left = x;
+        ballObj.style.top = y;
+        setTimeout(draw, 30);
+    }
+    setTimeout(draw, 30);
+</script>
+<style>
+    body { margin: 0; padding: 0; }
+    #ball { 
+        position: 
+        fixed; 
+        background-color: red; 
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+    }
+</style>
+</body>
