@@ -1,31 +1,71 @@
 <body>
 <div id="ball"></div>
+<div id="box"></div>
 <script>
     const ballObj = document.getElementById("ball");
+    const boxObj = document.getElementById("box");
+    const frameRate = 30;
+
+    const ballWidth = 30;
+    const ballHeight = 30;
+
+    ballObj.style.width = ballWidth;
+    ballObj.style.height = ballHeight;
+
+    const maxX = 300;
+    const maxY = 100;
+
     let x, y;
     let xspeed, yspeed;
-    x = 0;
-    y = 0;
+    
+    x = Math.floor(Math.random() * (maxX - ballWidth));
+    y = Math.floor(Math.random() * (maxY - ballHeight));
+
     xspeed = 1;
     yspeed = 1;
+
+
+    boxObj.style.width = maxX;
+    boxObj.style.height = maxY;
+
+    let changeColor = true;
+
     function draw() {
+
+        if ( x < 0 || (x + ballWidth) > maxX ) {
+            xspeed = xspeed * -1;
+            changeColor = true;
+        }
+        if ( y < 0 || (y + ballHeight) > maxY ) {
+            yspeed = yspeed * -1;
+            changeColor = true;
+        }
+
+        if ( changeColor ) {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            ballObj.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            changeColor = false;
+        }
+
         x = x + xspeed;
         y = y + yspeed;
         ballObj.style.left = x;
         ballObj.style.top = y;
-        setTimeout(draw, 30);
+
+        setTimeout(draw, frameRate);
     }
-    setTimeout(draw, 30);
+    setTimeout(draw, frameRate);
 </script>
 <style>
     body { margin: 0; padding: 0; }
     #ball { 
         position: 
         fixed; 
-        background-color: red; 
-        width: 20px;
-        height: 20px;
         border-radius: 20px;
     }
+
+    #box { border: solid 1px #000; }
 </style>
 </body>
