@@ -1,71 +1,93 @@
 <body>
-<div id="ball"></div>
-<div id="box"></div>
-<script>
-    const ballObj = document.getElementById("ball");
+  <div id="box"></div>
+  <input
+    type="range"
+    onchange="setBallSize(this.value)"
+    id="ballSize"
+    min="3"
+    max="30"
+  />
+
+  <script>
+    
+    // This is a class
+    function Ball(maxX, maxY) {
+        this.ballSize = 10 + Math.floor(Math.random() * 20);
+        this.x = Math.floor(Math.random() * (maxX - this.ballSize));
+        this.y = Math.floor(Math.random() * (maxY - this.ballSize));
+        this.xspeed = 1;
+        this.yspeed = 1;
+        const ballObj = document.createElement("div");
+        ballObj.className = "ball";
+        document.body.appendChild(ballObj);
+        ballObj.style.width = this.ballSize;
+        ballObj.style.height = this.ballSize;
+
+      let changeColor = true;
+
+      this.update = function() {
+        
+        if (this.x < 0 || this.x + this.ballSize > maxX) {
+          this.xspeed = this.xspeed * -1;
+          this.changeColor = true;
+        }
+
+        if (this.y < 0 || this.y + this.ballSize > maxY) {
+          this.yspeed = this.yspeed * -1;
+          this.changeColor = true;
+        }
+
+        if (this.changeColor) {
+          const r = Math.floor(Math.random() * 256);
+          const g = Math.floor(Math.random() * 256);
+          const b = Math.floor(Math.random() * 256);
+          ballObj.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+          this.changeColor = false;
+        }
+
+        this.x = this.x + this.xspeed;
+        this.y = this.y + this.yspeed;
+        ballObj.style.left = this.x;
+        ballObj.style.top = this.y;
+      }
+    }
+
     const boxObj = document.getElementById("box");
+    const ballSizeObj = document.getElementById("ballSize");
     const frameRate = 30;
-
-    const ballWidth = 30;
-    const ballHeight = 30;
-
-    ballObj.style.width = ballWidth;
-    ballObj.style.height = ballHeight;
-
     const maxX = 300;
     const maxY = 100;
-
-    let x, y;
-    let xspeed, yspeed;
-    
-    x = Math.floor(Math.random() * (maxX - ballWidth));
-    y = Math.floor(Math.random() * (maxY - ballHeight));
-
-    xspeed = 1;
-    yspeed = 1;
-
 
     boxObj.style.width = maxX;
     boxObj.style.height = maxY;
 
-    let changeColor = true;
+    const balls = [];
+    for(let i = 0; i < 50; i++) {
+        balls[i] = new Ball(maxX,maxY);
+    }
+
 
     function draw() {
-
-        if ( x < 0 || (x + ballWidth) > maxX ) {
-            xspeed = xspeed * -1;
-            changeColor = true;
+        for(let i = 0; i < 10; i++) {
+            balls[i].update();
         }
-        if ( y < 0 || (y + ballHeight) > maxY ) {
-            yspeed = yspeed * -1;
-            changeColor = true;
-        }
-
-        if ( changeColor ) {
-            const r = Math.floor(Math.random() * 256);
-            const g = Math.floor(Math.random() * 256);
-            const b = Math.floor(Math.random() * 256);
-            ballObj.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-            changeColor = false;
-        }
-
-        x = x + xspeed;
-        y = y + yspeed;
-        ballObj.style.left = x;
-        ballObj.style.top = y;
-
         setTimeout(draw, frameRate);
     }
+
     setTimeout(draw, frameRate);
-</script>
-<style>
-    body { margin: 0; padding: 0; }
-    #ball { 
-        position: 
-        fixed; 
-        border-radius: 20px;
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .ball {
+      position: fixed;
+      border-radius: 20px;
     }
 
-    #box { border: solid 1px #000; }
-</style>
+    #box {
+      border: solid 1px #000;
+    }
+  </style>
 </body>
