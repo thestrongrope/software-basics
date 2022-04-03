@@ -1,0 +1,121 @@
+<canvas id="canvas"></canvas>
+
+
+<script>
+
+const width = 400;
+const height = 200;
+const canvas = document.getElementById("canvas");
+canvas.width = width;
+canvas.height = height;
+
+const ctx = canvas.getContext('2d');
+
+const frameRate = 60;
+
+let ship = new Ship(width/ 2, height/2, 20);
+
+function draw() {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ship.render();
+    setTimeout(draw, 1000 / frameRate);
+}
+
+document.addEventListener("keydown", (e) => {
+    ship.update(e.key);    
+});
+
+document.addEventListener("keyup", (e) => {
+    ship.stop();    
+});
+
+draw();
+
+// ===========================================
+
+function Ship(x, y, size) {
+    let direction = 0;
+    let acc = 1.1;
+    let maxSpeed = 3;
+    let isAccelerating = false;
+
+    this.stop = () => {
+        isAccelerating = false;
+    }
+
+    this.update = (key) => {
+        if(key === 'ArrowRight') {
+            direction += 0.1;
+        }
+        if(key === 'ArrowLeft') {
+            direction += -0.1;
+        }
+        if(key === 'ArrowUp') {
+            isAccelerating = true;
+        }
+    }
+
+    this.edges = () => {
+        if ( x > width ) {
+            x = 0;
+        }
+        if ( y > height ) {
+            y = 0;
+        }
+        if ( x < 0 ) {
+            x = width;
+        }
+        if (y < 0) {
+            y = height;
+        }
+    }
+
+    this.render = () => {
+
+        let nx;
+        let ny;
+
+        nx = Math.sin(direction);
+        ny = Math.cos(direction);
+
+        if (isAccelerating) {
+            acc += 0.1;
+            if(acc > maxSpeed) acc =maxSpeed;
+        } else {
+            acc = acc * 0.95;
+        }
+
+        x = x + (nx * acc);
+        y = y - (ny * acc);
+
+        this.edges();
+
+        ctx.save();
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+
+        ctx.beginPath();
+        ctx.translate(x, y);
+        ctx.rotate(direction);
+        ctx.moveTo(0, -Math.sqrt(size));
+        ctx.lineTo(0, -size);
+        ctx.lineTo(size / 2, 0);
+
+        ctx.lineTo(0, -Math.sqrt(size));
+
+        ctx.lineTo(-size / 2, 0);
+        
+        ctx.lineTo(0, -size);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+    }
+}
+
+    
+</script>
+<style>
+    canvas { border: solid 1px #000; }
+</style>

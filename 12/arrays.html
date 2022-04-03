@@ -5,11 +5,27 @@
 
 <script>
 let numbers = [];
-for(let i = 0; i < 10; i++) {
+for(let i = 0; i < 20; i++) {
     numbers.push(i);
 }
-numbers = numbers.filter(x => x % 2 === 0 && x > 0);
-numbers = numbers.map(x => x * x);
+
+const isDivisible = (x, y) => x % y === 0;
+Number.prototype.isDivisibleBy = function(x) {
+    return isDivisible(this, x);
+}
+
+// display only numbers divisible by 3 or 5
+// numbers = numbers.filter(x => (x % 3 === 0 || x % 5 === 0) && x > 0);
+
+// change all numbers divisible by 3 to foo
+// change all numbers divisible by 5 to bar
+// change all numbers divisible by both to foobar
+numbers = numbers.map(x => 
+    ( isDivisible(x, 3) && isDivisible(x, 5) === 0 ) ? "foobar" : 
+    ( x.isDivisibleBy(3) ) ? "foo" : 
+    ( x % 5 === 0 ) ? "bar" : x
+);
+
 while(numbers.length > 0) {
     let num = numbers.shift();
     document.write(num + "<br />");
