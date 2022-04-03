@@ -36,7 +36,7 @@ draw();
 
 function Ship(x, y, size) {
     let direction = 0;
-    let acc = 1.1;
+    let acc = 0;
     let maxSpeed = 3;
     let isAccelerating = false;
 
@@ -71,13 +71,9 @@ function Ship(x, y, size) {
         }
     }
 
-    this.render = () => {
-
-        let nx;
-        let ny;
-
-        nx = Math.sin(direction);
-        ny = Math.cos(direction);
+    this.accelerate = () => {
+        let nx = Math.sin(direction);
+        let ny = Math.cos(direction);
 
         if (isAccelerating) {
             acc += 0.1;
@@ -85,9 +81,13 @@ function Ship(x, y, size) {
         } else {
             acc = acc * 0.95;
         }
-
         x = x + (nx * acc);
         y = y - (ny * acc);
+    }
+
+    this.render = () => {
+
+        this.accelerate();
 
         this.edges();
 
