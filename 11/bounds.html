@@ -62,13 +62,13 @@
     boxObj.style.height = maxY;
 
     const balls = [];
-    for(let i = 0; i < 50; i++) {
+    for(let i = 0; i < 200; i++) {
         balls[i] = new Ball(maxX,maxY);
     }
 
 
     function draw() {
-        for(let i = 0; i < 10; i++) {
+        for(let i = 0; i < balls.length; i++) {
             balls[i].update();
         }
         setTimeout(draw, frameRate);

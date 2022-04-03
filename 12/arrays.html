@@ -1,0 +1,17 @@
+// Stack, Queue
+// LIFO (Last In First Out), FIFO (First In First Out)
+// pop (removes one element from the end)
+// shift (removes one element from the beginning)
+
+<script>
+let numbers = [];
+for(let i = 0; i < 10; i++) {
+    numbers.push(i);
+}
+numbers = numbers.filter(x => x % 2 === 0 && x > 0);
+numbers = numbers.map(x => x * x);
+while(numbers.length > 0) {
+    let num = numbers.shift();
+    document.write(num + "<br />");
+}
+</script>
