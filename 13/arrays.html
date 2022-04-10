@@ -1,0 +1,67 @@
+<script>
+    // add elements to an array
+    // push()
+    // filter elements or search for elements in an array
+    // filter()
+    // modify all elements of an array
+    // map()
+    // grouping elements of an array
+
+
+// Given a string - find the most repeated character within the string
+
+//const s  = "hello world"; // array of characters
+const url = 'https://random-word-api.herokuapp.com/word?number=1';
+fetch(url).then(x => x.json()).then(x => {
+    const s = x.pop();
+    findMostRepeatedCharacter(s);
+})
+
+// Map / Dictionary / Objects
+// Difference between a Map and an Array
+// Array has numeric keys => (0) Ali, (1) Mohammad, (2) Raza
+// Map => string keys
+// Weather => Mumbai : 38, Delhi : 40, Kolkatta : 35
+//  38, 40, 35
+// Mumbai, Delhi, Kolkatta
+
+function findMostRepeatedCharacter(s) {
+    
+    const characters = {}; // characters is an array, characters is a map
+
+    for(let i = 0; i < s.length; i++) {
+        const char = s[i]; // treat the string as an array
+        if(characters[char] === undefined) {
+            characters[char] = 0;
+        }
+        characters[char] ++;
+    }
+    
+    let mostRepeatedCharacters = [];
+    let mostRepeatedTimes = 0;
+
+    for(let key in characters) { // lists all keys in an object/map
+        let repeatedTimes = characters[key];
+        if(mostRepeatedTimes < repeatedTimes) {
+            mostRepeatedTimes = repeatedTimes;
+        }
+    }
+
+    for(let key in characters) {
+        let repeatedTimes = characters[key];
+        if(repeatedTimes === mostRepeatedTimes) {
+            mostRepeatedCharacters.push(key);
+        }
+    }
+
+    document.write(s + "<br />");
+    if(mostRepeatedTimes <= 1) {
+        document.write('There are no repeated characters')
+    } else {
+        const r = mostRepeatedCharacters.join(', ');
+        document.write(r + ' was repeated ' + mostRepeatedTimes + ' times');
+    }
+    
+}
+
+</script>
