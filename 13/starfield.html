@@ -1,0 +1,201 @@
+<canvas id="canvas"></canvas>
+
+<div id="message"></div>
+
+<script>
+const width = 400;
+const height = 200;
+const canvas = document.getElementById("canvas");
+canvas.width = width;
+canvas.height = height;
+
+const ctx = canvas.getContext('2d');
+
+
+const messageObj = document.getElementById("message");
+
+const frameRate = 60;
+
+const random = (min, max) => min + Math.floor(Math.random() * (max - min + 1))
+
+const dist = (x1, x2, y1, y2) => {
+    let x = x2 - x1;
+    let y = y2 - y1;
+    return Math.sqrt(x * x + y * y);
+}
+
+let ship = new Ship(width/ 2, height/2, 20);
+
+let maxObstacles  = 1;
+let obstacles = []
+for(let i = 0; i < maxObstacles; i++) {
+    obstacles.push(new Obstacle());
+}
+
+function draw() {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    
+    for(let i = 0; i < maxObstacles; i++) {
+        obstacles[i].render();
+    }
+
+    ship.render();
+
+    for(let i = 0; i < maxObstacles; i++) {
+        let obstacle = obstacles[i];
+        let shipPos = ship.getPosition();
+        let distance = dist(shipPos.x, shipPos.y, obstacle.x, obstacle.y);
+        let allowedDistance = obstacle.size + ship.size;
+
+        messageObj.innerHTML = `${shipPos.x}, ${shipPos.y}, ${obstacle.x}, ${obstacle.y}}`;
+
+        //messageObj.innerHTML = `${distance} < ${allowedDistance}`;
+        if(distance < allowedDistance) {
+            //document.write('Ship colliding with obstacle ' + i);
+        }
+    }
+
+    setTimeout(draw, 1000 / frameRate);
+}
+
+document.addEventListener("keydown", (e) => {
+    ship.update(e.key);    
+});
+
+document.addEventListener("keyup", (e) => {
+    ship.stop();    
+});
+
+draw();
+
+// ===========================================
+
+function Ship(x, y, size) {
+    let direction = 0;
+    let acc = 0;
+    let maxSpeed = 5;
+    let isAccelerating = false;
+
+
+    this.size = size;
+
+    this.getPosition = () => ({x: x, y: y})
+
+    this.stop = () => {
+        isAccelerating = false;
+    }
+
+    this.update = (key) => {
+        if(key === 'ArrowRight') {
+            direction += 0.1;
+        }
+        if(key === 'ArrowLeft') {
+            direction += -0.1;
+        }
+        if(key === 'ArrowUp') {
+            isAccelerating = true;
+        }
+    }
+
+    this.edges = () => {
+        if ( x > width ) {
+            x = 0;
+        }
+        if ( y > height ) {
+            y = 0;
+        }
+        if ( x < 0 ) {
+            x = width;
+        }
+        if (y < 0) {
+            y = height;
+        }
+    }
+
+    this.accelerate = () => {
+        let nx = Math.sin(direction);
+        let ny = Math.cos(direction);
+
+        if (isAccelerating) {
+            acc += 0.1;
+            if(acc > maxSpeed) acc =maxSpeed;
+        } else {
+            acc = acc * 0.95;
+        }
+        x = x + (nx * acc);
+        y = y - (ny * acc);
+    }
+
+    this.render = () => {
+
+        this.accelerate();
+
+        this.edges();
+
+        ctx.save();
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+
+        ctx.beginPath();
+        ctx.translate(x, y);
+        ctx.rotate(direction);
+        ctx.moveTo(0, -Math.sqrt(size));
+        ctx.lineTo(0, -size);
+        ctx.lineTo(size / 2, 0);
+
+        ctx.lineTo(0, -Math.sqrt(size));
+
+        ctx.lineTo(-size / 2, 0);
+        
+        ctx.lineTo(0, -size);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+    }
+}
+
+
+function Obstacle() {
+    let x;
+    let y;
+    let size;
+
+
+    // 10% to 30% of the height of the canvas
+    const minHeight = height * 0.05;
+    const maxHeight = height * 0.25;
+    size = random(minHeight, maxHeight);
+
+    x = random(size, width - size);
+    y = random(size, height - size);
+
+    this.x = x;
+    this.y = y;
+    this.size = size;
+
+    let r = random(0, 255);
+    let g = random(0, 255);
+    let b = random(0, 255);
+
+    this.render = () => {
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);        
+        ctx.stroke();
+
+        
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.5)`;
+        ctx.fill();
+        ctx.closePath();
+    }
+}   
+
+
+
+
+</script>
+<style>
+    canvas { border: solid 1px #000; }
+</style>

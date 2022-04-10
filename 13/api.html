@@ -1,0 +1,17 @@
+<script>
+const url = "https://wft-geo-db.p.rapidapi.com/v1/geo/adminDivisions";
++ "?limit=10&countryIds=in";
+
+const headers = {
+'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+'X-RapidAPI-Key': 'ccfee68cefmshdf8a42d4c43f346p1b4296jsn1b2a28e4fb33'
+}
+
+fetch(url, {
+    headers: headers
+}).then(x => x.json()).then(x => {
+    console.log(x);
+    document.write('There are ' + x.metadata.totalCount + ' cities in India');
+})
+
+</script>
