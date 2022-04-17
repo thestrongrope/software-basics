@@ -1,5 +1,63 @@
 
-<input type="number" id="amount" />
+<table>
+    <tr>
+        <td>
+            Item One
+        </td>
+        <td>
+            <input class="item" type="number" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Item Two
+        </td>
+        <td>
+            <input class="item" type="number" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Item Three
+        </td>
+        <td>
+            <input class="item" type="number" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Sub Total
+        </td>
+        <td>
+            <input id="subtotal" type="number" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            CGST (9%)
+        </td>
+        <td>
+            <input class="gst" type="number" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            SGST (9%)
+        </td>
+        <td>
+            <input class="gst" type="number" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Final Amount
+        </td>
+        <td>
+            <input type="number" id="amount" />
+        </td>
+    </tr>
+</table>
+
 <div id="amountInWords"></div>
 
 <script>
@@ -7,7 +65,7 @@
         return min + Math.floor(Math.random() * (max - min + 1));
     }
     const numberInWords = (num) => {
-        let wordStr = "zero,one,two,three,four,five,six,seven,eight,nine";
+        let wordStr = "Zero,One,Two,Three,Four,Five,Six,Seven,Eight,Nine";
         let words = wordStr.split(',');
         let numArr = [];
         while(num > 0) {
@@ -19,16 +77,40 @@
         return numArr.map(x => words[x]).join(' ');
     }
 
+    const itemsObj = Array.from(document.getElementsByClassName("item"));
+    const subtotalObj = document.getElementById("subtotal");
+    const gstObj = Array.from(document.getElementsByClassName("gst"));
     const amountObj = document.getElementById("amount");
     const amountInWordsObj = document.getElementById("amountInWords");
 
-    const setAmount = () => {
-        amountInWordsObj.innerHTML = numberInWords(amount.value);
+    const calculateAmount = () => {
+        let subTotal = 0;
+        const itemValues = itemsObj.map(x => {
+            const num = parseInt(x.value, 10);
+            return isNaN(num) ? 0 : num;
+        });
+
+        subTotal = itemValues.reduce( (previous, current) => previous + current);
+        
+        subtotalObj.value = subTotal;
+        
+        amountInWordsObj.innerHTML = "Rupees " + numberInWords(amount.value) + " only";
     }
 
-    amountObj.addEventListener("change", () => setAmount() );
-    amountObj.addEventListener("keyup", () => setAmount() );
+    for(let i  = 0; i < itemsObj.length; i++) {
+        itemsObj[i].addEventListener("change", () => calculateAmount() );
+        itemsObj[i].addEventListener("keyup", () => calculateAmount() );
+
+        itemsObj[i].value = random(1000, 9999);    
+        calculateAmount();
+    }
+
+
+
 
     amountObj.value = random(10000, 99999);
-    amountObj.dispatchEvent(new Event('change'));
 </script>
+
+<style>
+    input[type=number] { text-align: right; }
+</style>
