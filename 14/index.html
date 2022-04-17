@@ -1,5 +1,6 @@
 
-<table>
+<button id="addItem">Add Item</button>
+<table id="invoiceTable">
     <tr>
         <td>
             Item One
@@ -24,6 +25,16 @@
             <input class="item" type="number" />
         </td>
     </tr>
+    <tr>
+        <td>
+            Item Four
+        </td>
+        <td>
+            <input class="item" type="number" />
+        </td>
+    </tr>
+</table>
+<table>
     <tr>
         <td>
             Sub Total
@@ -77,24 +88,31 @@
         return numArr.map(x => words[x]).join(' ');
     }
 
-    const itemsObj = Array.from(document.getElementsByClassName("item"));
     const subtotalObj = document.getElementById("subtotal");
     const gstObj = Array.from(document.getElementsByClassName("gst"));
     const amountObj = document.getElementById("amount");
     const amountInWordsObj = document.getElementById("amountInWords");
+    const addItemObj = document.getElementById("addItem");
+    let itemsObj = Array.from(document.getElementsByClassName("item"));
+    let totalItems = itemsObj.length;
 
     const calculateAmount = () => {
+        itemsObj = Array.from(document.getElementsByClassName("item"));
+
         let subTotal = 0;
         const itemValues = itemsObj.map(x => {
             const num = parseInt(x.value, 10);
             return isNaN(num) ? 0 : num;
         });
+        subTotal = itemValues.reduce( (previous, current) => previous + current);        
+        const gst = Math.floor(subTotal * 0.09);
+        const finalAmount = subTotal + gst + gst;
 
-        subTotal = itemValues.reduce( (previous, current) => previous + current);
-        
         subtotalObj.value = subTotal;
-        
-        amountInWordsObj.innerHTML = "Rupees " + numberInWords(amount.value) + " only";
+        gstObj[0].value = gst;
+        gstObj[1].value = gst;        
+        amountObj.value = finalAmount;        
+        amountInWordsObj.innerHTML = "Rupees " + numberInWords(finalAmount) + " only";
     }
 
     for(let i  = 0; i < itemsObj.length; i++) {
@@ -105,10 +123,25 @@
         calculateAmount();
     }
 
+    const invoiceTableObj = document.getElementById("invoiceTable");
 
+    addItemObj.addEventListener('click', () => {
 
+        totalItems ++;
 
-    amountObj.value = random(10000, 99999);
+        let row = invoiceTableObj.insertRow();
+        let c1 = document.createElement("TD");
+        c1.innerHTML = "Item " + totalItems;
+        let c2 = document.createElement("TD");
+        let inp = document.createElement("INPUT");
+        inp.className = "item";
+        inp.type = "number";
+        inp.addEventListener("change", () => calculateAmount() );
+        inp.addEventListener("keyup", () => calculateAmount() );
+        c2.append(inp);
+        row.append(c1)
+        row.append(c2)
+    })    
 </script>
 
 <style>
