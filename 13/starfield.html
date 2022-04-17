@@ -48,10 +48,7 @@ function draw() {
         let shipPos = ship.getPosition();
         let distance = dist(shipPos.x, shipPos.y, obstacle.x, obstacle.y);
         let allowedDistance = obstacle.size + ship.size;
-
         messageObj.innerHTML = `${shipPos.x}, ${shipPos.y}, ${obstacle.x}, ${obstacle.y}}`;
-
-        //messageObj.innerHTML = `${distance} < ${allowedDistance}`;
         if(distance < allowedDistance) {
             //document.write('Ship colliding with obstacle ' + i);
         }
