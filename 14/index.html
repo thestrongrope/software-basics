@@ -1,3 +1,7 @@
+
+<input type="number" id="amount" />
+<div id="amountInWords"></div>
+
 <script>
     const random = (min, max) => {
         return min + Math.floor(Math.random() * (max - min + 1));
@@ -14,6 +18,17 @@
         numArr.reverse();
         return numArr.map(x => words[x]).join(' ');
     }
-    let num = random(10000, 99999);
-    document.write(num + ": " + numberInWords(num) + "<br />");
+
+    const amountObj = document.getElementById("amount");
+    const amountInWordsObj = document.getElementById("amountInWords");
+
+    const setAmount = () => {
+        amountInWordsObj.innerHTML = numberInWords(amount.value);
+    }
+
+    amountObj.addEventListener("change", () => setAmount() );
+    amountObj.addEventListener("keyup", () => setAmount() );
+
+    amountObj.value = random(10000, 99999);
+    amountObj.dispatchEvent(new Event('change'));
 </script>
