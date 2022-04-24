@@ -11,7 +11,6 @@ canvas.height = height;
 
 const ctx = canvas.getContext('2d');
 
-
 const messageObj = document.getElementById("message");
 
 const frameRate = 60;
@@ -65,6 +64,7 @@ function draw() {
         let allowedDistance = obstacle.size + ship.size;
         if(distance < allowedDistance) {
             obstacles[i] = null;
+            ship.grow();
         }
     }
 
@@ -102,6 +102,11 @@ function Ship(x, y, size) {
 
     this.stop = () => {
         isAccelerating = false;
+    }
+
+    this.grow = () => {
+        size++;
+        this.size = size;
     }
 
     this.update = (key) => {
