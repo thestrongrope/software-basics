@@ -1,0 +1,46 @@
+<div id="gainers"></div>
+<div id="losers"></div>
+<div id="actives"></div>
+
+<script>
+    
+    fetch('data.json')
+    .then(x => x.json()) // deserializes
+    .then(x => {
+        drawTable('gainers', x.gainers);
+        drawTable('losers', x.losers);
+        drawTable('actives', x.actives);
+    }); 
+
+    function drawTable(id, data) {
+        var html = '<table border=1>';
+        html += '<tr>';
+        html += '<th>Exchange</th>';
+        html += '<th>Price ($)</th>';
+        html += '<th>Name</th>';
+        html += '<th>Change ($)</th>';
+        html += '<th>% Change</th>';
+        html += '<th>Ticker</th>';
+        html += '<th>Volume</th>';
+        html += '</tr>';
+        for(let i = 0; i < data.length; i++) {
+            html += addRow(data[i]);
+        }
+        html += '</table>';
+        document.getElementById(id).innerHTML = html;
+    }
+
+    function addRow(company) {
+        var html = '<tr>';
+        html += `<td>${company.exchange}</td>`
+        html += `<td align=right>${company.lastPrice}</td>`
+        html += `<td>${company.name}</td>`
+        html += `<td align=right>${company.netChange}</td>`
+        html += `<td align=right>${company.percentNetChange}</td>`
+        html += `<td>${company.ticker}</td>`
+        html += `<td align=right>${company.volume}</td>`
+        html+= '</tr>';
+        return html;
+    }   
+    
+</script>
