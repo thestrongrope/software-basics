@@ -1,19 +1,57 @@
+<div id="companies"></div>
 <div id="gainers"></div>
 <div id="losers"></div>
 <div id="actives"></div>
 
 <script>
-    
     fetch('data.json')
     .then(x => x.json()) // deserializes
     .then(x => {
+        drawList('companies', companyList(x));
         drawTable('gainers', x.gainers);
         drawTable('losers', x.losers);
         drawTable('actives', x.actives);
     }); 
 
+    function capitalize(s) {
+        return s[0].toUpperCase() + s.toLowerCase().substring(1);
+    }
+
+    function addCompaniesToList(companies, arr) {
+        arr.map(obj => {
+            const hasTicker = companies.some(y => y.ticker === obj.ticker);
+            if(!hasTicker) 
+            {
+                companies.push({
+                    ticker: obj.ticker,
+                    name: obj.name,
+                })            
+            }
+        })
+    }
+
+    function companyList(x) {
+        const companies = [];
+        addCompaniesToList(companies, x.gainers)
+        addCompaniesToList(companies, x.losers)
+        addCompaniesToList(companies, x.actives)
+        return companies;
+    }
+
+    function drawList(id, data) {
+        data.sort((a, b) => a.name.localeCompare(b.name))
+
+        var html = '<ol>';
+        html += data.reduce( (html, x) => {
+            return html + '<li>' + x.name + '</li>';
+        }, '')
+        html += '</ol>';
+        document.getElementById(id).innerHTML = html;
+    }
+
     function drawTable(id, data) {
         var html = '<table border=1>';
+        html += `<caption>${capitalize(id)}</caption>`;
         html += '<tr>';
         html += '<th>Exchange</th>';
         html += '<th>Price ($)</th>';
@@ -21,26 +59,63 @@
         html += '<th>Change ($)</th>';
         html += '<th>% Change</th>';
         html += '<th>Ticker</th>';
-        html += '<th>Volume</th>';
+        html += '<th>Volume (m)</th>';
         html += '</tr>';
+
+        const subTotal = {
+            price: 0,
+            change: 0,
+            percentChange: 0,
+            volume: 0
+        };
+
         for(let i = 0; i < data.length; i++) {
-            html += addRow(data[i]);
+            var company = data[i];
+
+            subTotal.price += company.lastPrice;
+            subTotal.change += company.netChange;
+            subTotal.volume += company.volume;
+
+            html += addRow(company);
         }
+
+        subTotal.percentChange = 
+            (subTotal.change / (subTotal.price - subTotal.change)) * 100;
+
+        subTotalHtml = '<tr class="b">';
+        subTotalHtml += `<td>Total</td>`
+        subTotalHtml += `<td align=right>${subTotal.price.toFixed(2)}</td>`
+        subTotalHtml += `<td></td>`
+        subTotalHtml += `<td align=right>${subTotal.change.toFixed(2)}</td>`
+        subTotalHtml += `<td align=right>${subTotal.percentChange.toFixed(1)}</td>`
+        subTotalHtml += `<td></td>`
+        subTotalHtml += `<td align=right>${(subTotal.volume / 1_000_000).toFixed(3)}</td>`
+        subTotalHtml += '</tr>';
+
+        html += subTotalHtml;
+
         html += '</table>';
         document.getElementById(id).innerHTML = html;
     }
 
     function addRow(company) {
+
+        const changePercent = (company.netChange / (company.lastPrice - company.netChange)) * 100;
+
         var html = '<tr>';
         html += `<td>${company.exchange}</td>`
-        html += `<td align=right>${company.lastPrice}</td>`
+        html += `<td align=right>${company.lastPrice.toFixed(2)}</td>`
         html += `<td>${company.name}</td>`
-        html += `<td align=right>${company.netChange}</td>`
-        html += `<td align=right>${company.percentNetChange}</td>`
+        html += `<td align=right>${company.netChange.toFixed(2)}</td>`
+        html += `<td align=right>${changePercent.toFixed(1)}</td>`
         html += `<td>${company.ticker}</td>`
-        html += `<td align=right>${company.volume}</td>`
+        html += `<td align=right>${(company.volume / 1_000_000).toFixed(3)}</td>`
         html+= '</tr>';
         return html;
     }   
     
 </script>
+
+<style>
+    tr.b td { font-weight: bold; }
+</style>
