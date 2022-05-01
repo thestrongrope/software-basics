@@ -1,0 +1,139 @@
+<script>
+
+// Short Recap of things we have done
+
+// Software Development
+// Key Concepts
+// Tools
+//  Variables
+//  Branching Statements (Conditional Statements)
+//  Looping Statements (For, While, Do While)
+//  Operators (Assignment, Logical, Mathematical)
+//  Data Structures
+//     Arrays
+//     Stack
+//     Queue
+//     Objects (JSON)
+//     Linked List => Binary Search Tree  
+// Sorting, Filtering
+// API Connections
+// Simple games
+// Small Accouting package - reversing a number
+// Binary Search
+
+
+// Given a sorted list of data
+// find a given phone number
+// 100 numbers => best case 1
+//             => worst 100
+//              => O(n)
+//              => O(n*n)
+//              => log
+// 10^2 => 100
+// log 100 => 2
+// 1 ^ 10 => 10_000_000_000
+// log (10_000_000_000) = 10
+// O log n
+
+// What's the way forward
+//  Concepts and Logic
+//      https://www.topcoder.com/
+//      https://www.codechef.com/
+//      https://www.hackerrank.com/
+
+// Queries
+
+// Binary search
+// Genetic Algorithms - Machine Learning
+// Cellular Automata 
+// Wolfram Cellular Automata (1D)
+// => Game of Life (2D)
+
+function WolframCellularAutomata(totalCells) {
+    let cells = [];
+    for (var i = 0; i < totalCells; i++) {
+      cells.push(0);
+    }
+    cells[Math.floor(totalCells/2)] = 1;
+    let generation = 0;
+    let ruleset = {
+        '111': 0,
+        '110': 1,
+        '101': 0,
+        '100': 1,
+        '011': 1,
+        '010': 0,
+        '001': 1,
+        '000': 0,
+    }
+
+    ruleset = {
+        '111': 0,
+        '110': 0,
+        '101': 0,
+        '100': 1,
+        '011': 1,
+        '010': 1,
+        '001': 1,
+        '000': 0,
+    }
+
+    ruleset = {
+        '111': 0,
+        '110': 0,
+        '101': 1,
+        '100': 1,
+        '011': 0,
+        '010': 0,
+        '001': 1,
+        '000': 0,
+    }
+
+    const rules = (a, b, c) => {
+        return ruleset[`${a}${b}${c}`];
+    };
+
+    this.generate = () => {
+      let nextgen = [];
+      for (var i = 0; i < cells.length; i++) {
+        nextgen[i] = 0;
+      }
+
+      for (let i = 1; i < cells.length-1; i++) {
+        var left   = cells[i-1];   // Left neighbor state
+        var me     = cells[i];     // Current state
+        var right  = cells[i+1];   // Right neighbor state
+        nextgen[i] = rules(left, me, right); // Compute next generation state based on ruleset
+      }
+      
+      // The current generation is the new generation
+      cells = nextgen;
+      generation++;
+    };
+  
+    this.display = () => {
+        var html = "<tr>";
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i] == 1) html += "<td bgcolor=red></td>";
+            else               html += "<td></td>";
+        }
+        html += "</tr>";
+        document.write(html);
+    };
+  
+  }
+  
+var c = new WolframCellularAutomata(41);
+document.write('<table>');
+for(let i = 0; i < 20; i++) {
+    c.display();
+    c.generate();
+}
+
+</script>
+
+<style>
+    table { border-collapse: collapse; }
+    td { height: 10px; width: 10px; }
+
+</style>

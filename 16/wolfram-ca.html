@@ -1,0 +1,81 @@
+<script>
+
+function WolframCellularAutomata(totalCells) {
+    let cells = [];
+    let generation = 0;
+
+    for(let  i = 0; i < totalCells; i++) {
+        cells.push(0);
+    }
+
+    cells[ Math.floor(totalCells / 2) ] = 1;
+
+    let rules = {
+        '111': 0,
+        '110': 1,
+        '101': 0,
+        '100': 1,
+        '011': 1,
+        '010': 0,
+        '001': 1,
+        '000': 0,       
+    }
+
+    rules = {
+        '111': 0,
+        '110': 0,
+        '101': 0,
+        '100': 1,
+        '011': 1,
+        '010': 1,
+        '001': 1,
+        '000': 0,       
+    }
+
+    // create the next generation
+    this.generate = () => {
+        // Make a copy of the original cells array
+        const newArr = [];
+        for(let i = 0; i < cells.length; i++) {
+            newArr.push(cells[i]);
+        }
+
+        // Apply the rules for each set of 3 cells
+        for(let i = 1; i < newArr.length - 1; i++) {
+            const leftNeighbor = cells[i - 1];
+            const me = cells[i];
+            const rightNeighbor = cells[i + 1];
+            const key = `${leftNeighbor}${me}${rightNeighbor}`;
+            const newValue = rules[key];
+            newArr[i] = newValue;
+        }
+
+        cells = newArr;
+    }
+
+    // display the current generation
+    this.display = () => {
+        html = '<tr>'
+        for(let i = 0; i < cells.length; i++) {
+            if(cells[i] === 1) html += "<td bgcolor=red></td>";
+            else html += '<td></td>';
+        }
+        html += '</tr>';
+        document.write(html);
+    }
+}
+
+
+const c = new WolframCellularAutomata(40);
+
+document.write('<table>');
+for(let i = 0; i < 40; i++) {
+    c.display();
+    c.generate();
+}
+</script>
+
+<style>
+    table { border-collapse: collapse}
+    td { border: solid 1px #000; width: 10px; height: 10px; }
+</style>

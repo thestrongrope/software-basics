@@ -1,0 +1,33 @@
+<script>
+const maxElements = 11;
+let data = [];
+for(let i = 0; i < maxElements; i++) {
+    data.push(Math.floor(Math.random() * 1000));
+}
+data.sort((a, b) => a-b);
+let search = data[Math.floor(Math.random() * maxElements)];
+
+const binarySearch = (data, search) => {
+    var minIndex = 0;
+    var maxIndex = data.length - 1;
+    while(maxIndex - minIndex > 2) {
+        var index = Math.floor( (maxIndex + minIndex) / 2);
+        var numIndex = data[index];
+        if(numIndex === search) return index;
+        if(numIndex < search) {
+            minIndex = index;
+        } else {
+            maxIndex = index;
+        }
+    }
+    if(numIndex === data[minIndex] ) return minIndex
+    if(numIndex === data[maxIndex] ) return maxIndex
+    return -1;
+}
+
+document.write(search);
+document.write(JSON.stringify(data));
+document.write('<hr>');
+var found = binarySearch(data, search);
+document.write("Found at index: " + found);
+</script>
